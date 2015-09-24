@@ -1,20 +1,15 @@
 package pspgt.examples.it.provasalvataggio;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.util.Map;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,7 +26,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button=(Button) findViewById(R.id.button);
         button.setOnClickListener(this);
         editText=(EditText) findViewById(R.id.editText);
+        //Ottengo le preferenze dell'app (la prima stringa è un identificativo,
+        // MODE_PRIVATE Indica che i dati salvati sono accessibili solo all'app che li ha creati
         pref=getSharedPreferences("appdiprova", Context.MODE_PRIVATE);
+        //tramite getString recupero il valore dell'oggetto salvato
         textView.setText(pref.getString("stringa",null));
     }
 
@@ -60,8 +58,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         String testo=editText.getText().toString();
+        //Istanzio l'editor delle preferenze
         SharedPreferences.Editor editor=pref.edit();
+        //Inserisco la lista degli oggetti da salvare con una stringa che li identifica
         editor.putString("stringa",testo);
+        //Effettuo il salvataggio effettivo
         editor.commit();
     }
 }
